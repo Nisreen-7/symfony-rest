@@ -29,3 +29,10 @@ Utiliser la méthode ->toArray() de la $request pour récupérer les données du
 Faire une instance de movie et dans le constructeur mettre les données du toArray aux bons emplacement, sachant que pour le "released" il faudra faire un new DateTime
 	
 Donner cette instance au persist du repo et faire un return de json() avec l'instance en argument et le status 201 (created)
+
+# Faire le GenreController en utilisant le GenreRepository
+## Méthode alternative
+ pour avoir le même résultat mais juste un peu moins optimisée : Créer une méthode findByMovie(int $movieId) dans le GenreRepository, et dans le MovieRepository::findAll() faire en sorte de lancer le findByMovie dans le foreach pour chaque film
+
+ ### Dans le GenreController,
+  rajouter une route sur localhost:8000/api/genre/movie/{id} qui utilisera le findByMovie du GenreRepository pour renvoyer les genres associés à un film donné

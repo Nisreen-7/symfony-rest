@@ -78,4 +78,17 @@ class GenreController extends AbstractController
         return $this->json($genre, 201);
 
     }
+
+
+    // Dans le GenreController, rajouter une route sur localhost:8000/api/genre/movie/{id} qui utilisera le findByMovie du GenreRepository
+//  pour renvoyer les genres associés à un film donné
+
+    #[Route('/movie/{id}', methods: 'GET')]
+    public function findGenreMovie(int $id): JsonResponse
+    {
+
+        $genreMovie = $this->genrep->findByMovie($id);
+        return $this->json($genreMovie);
+
+    }
 }

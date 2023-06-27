@@ -13,6 +13,7 @@ class Movie
 	private string $resume;
 	private DateTime $released;
 	private int $duration;
+	private array $Genre = [];
 	private ?int $id;
 
 	public function __construct(string $title, string $resume, DateTime $released, int $duration, ?int $id = null)
@@ -115,6 +116,27 @@ class Movie
 	public function setId(?int $id): self
 	{
 		$this->id = $id;
+		return $this;
+	}
+
+	/**
+	 * @return array
+	 */
+	public function getGenre(): array {
+		return $this->Genre;
+	}
+	
+	/**
+	 * @param array $Genre 
+	 * @return self
+	 */
+	public function setGenre(array $Genre): self {
+		$this->Genre = $Genre;
+		return $this;
+	}
+	
+	public function addGenre(Genre $genre): self {
+		$this->Genre[] = $genre;
 		return $this;
 	}
 }

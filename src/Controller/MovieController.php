@@ -21,7 +21,10 @@ class MovieController extends AbstractController
     #[Route(methods: 'GET')]
     public function all(): Response
     {
-        $movie = $this->movrep->findAll();
+        // $movie = $this->movrep->findAll();
+        $movie = $this->movrep->findAllWithoutJoin();
+
+
 
         return $this->json($movie);
     }
