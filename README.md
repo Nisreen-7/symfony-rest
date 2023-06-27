@@ -1,5 +1,5 @@
 # Créer un database.sql
- avec une entité et un repository pour : un Movie avec un title en varchar, un resume en text, un released en Date et un length en int
+ avec une entité et un repository pour : un Movie avec un title en varchar, un resume en text, un released en Date et un duration en int
 
 ## Premier contrôleur Rest :
 

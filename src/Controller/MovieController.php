@@ -54,7 +54,7 @@ class MovieController extends AbstractController
     public function add(Request $request, SerializerInterface $serializer)
     {
         // $data = $request->toArray();
-        // $movie = new Movie($data['title'], $data['resume'], new \DateTime($data['released']), $data['length']);
+        // $movie = new Movie($data['title'], $data['resume'], new \DateTime($data['released']), $data['duration']);
         $movie = $serializer->deserialize($request->getContent(), Movie::class, 'json');
         $this->movrep->persist($movie);
         return $this->json($movie, 201);
@@ -65,7 +65,7 @@ class MovieController extends AbstractController
     public function update(int $id, Request $request, SerializerInterface $serializer)
     {
         // $data = $request->toArray();
-        // $movie = new Movie($data['title'], $data['resume'], new \DateTime($data['released']), $data['length']);
+        // $movie = new Movie($data['title'], $data['resume'], new \DateTime($data['released']), $data['duration']);
         $movie = $this->movrep->findById($id);
         if ($movie == null) {
             return $this->json('Resource Not Found', 404);

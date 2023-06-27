@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+
 #[Route('/api/genre')]
 
 class GenreController extends AbstractController
@@ -54,7 +55,7 @@ class GenreController extends AbstractController
     public function add(Request $request, SerializerInterface $serializer)
     {
         // $data = $request->toArray();
-        // $movie = new Movie($data['title'], $data['resume'], new \DateTime($data['released']), $data['length']);
+        // $movie = new Movie($data['title'], $data['resume'], new \DateTime($data['released']), $data['duration']);
         $genre = $serializer->deserialize($request->getContent(), Movie::class, 'json');
         $this->genrep->persist($genre);
         return $this->json($genre, 201);
@@ -65,7 +66,7 @@ class GenreController extends AbstractController
     public function update(int $id, Request $request, SerializerInterface $serializer)
     {
         // $data = $request->toArray();
-        // $movie = new Movie($data['title'], $data['resume'], new \DateTime($data['released']), $data['length']);
+        // $movie = new Movie($data['title'], $data['resume'], new \DateTime($data['released']), $data['duration']);
         $genre = $this->genrep->findById($id);
         if ($genre == null) {
             return $this->json('Resource Not Found', 404);

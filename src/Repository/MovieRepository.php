@@ -12,11 +12,11 @@ class MovieRepository
     public function persist(Movie $data)
     {
         $connection = Database::getConnection();
-        $query = $connection->prepare("insert into movie (title,resume,released,length)VALUES(:title,:resume,:released,:length)");
+        $query = $connection->prepare("insert into movie (title,resume,released,duration)VALUES(:title,:resume,:released,:duration)");
         $query->bindValue(':title', $data->getTitle());
         $query->bindValue(':resume', $data->getResume());
         $query->bindValue(':released', $data->getReleased()->format('Y-m-d'));
-        $query->bindValue(':length', $data->getLength());
+        $query->bindValue(':duration', $data->getDuration());
 
         $query->execute();
         //  pour prend id en la main 
@@ -31,7 +31,7 @@ class MovieRepository
         $query->bindValue(':id', $id);
         $query->execute();
         foreach ($query->fetchAll() as $line) {
-            return new Movie($line['title'], $line['resume'], new DateTime($line['released']), $line['length'], $line['id']);
+            return new Movie($line['title'], $line['resume'], new DateTime($line['released']), $line['duration'], $line['id']);
         }
         return null;
     }
@@ -43,7 +43,7 @@ class MovieRepository
         $query = $connection->prepare("select * From movie");
         $query->execute();
         foreach ($query->fetchAll() as $line) {
-            $list[] = new Movie($line['title'], $line['resume'], new DateTime($line['released']), $line['length'], $line['id']);
+            $list[] = new Movie($line['title'], $line['resume'], new DateTime($line['released']), $line['duration'], $line['id']);
         }
         return $list;
     }
@@ -60,12 +60,12 @@ class MovieRepository
     public function update(Movie $data)
     {
         $connection = Database::getConnection();
-        $query = $connection->prepare("update movie set title=:title,resume=:resume,released=:released,length=:length 
+        $query = $connection->prepare("update movie set title=:title,resume=:resume,released=:released,duration=:duration 
         where id=:id");
         $query->bindValue(':title', $data->getTitle());
         $query->bindValue(':resume', $data->getResume());
         $query->bindValue(':released', $data->getReleased()->format('Y-m-d'));
-        $query->bindValue(':length', $data->getLength());
+        $query->bindValue(':duration', $data->getDuration());
         $query->bindValue(':id', $data->getId());
 
         $query->execute();

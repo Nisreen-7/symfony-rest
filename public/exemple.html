@@ -39,7 +39,7 @@
             fetch('http://localhost:8000/api/movie', {
                 method: 'POST',
                 headers,
-                body: JSON.stringify({ title: 'test', length: 56, resume: 'test', released: new Date() })
+                body: JSON.stringify({ title: 'test', duration: 56, resume: 'test', released: new Date() })
 
             })
                 .then(response => response.json())
@@ -65,7 +65,7 @@
             function display() {
                 document.querySelector('#target').innerHTML = '';
                 for (const item of list) {
-                    document.querySelector('#target').innerHTML += `<p>${item.title} -  ${item.length} minutes</p>`
+                    document.querySelector('#target').innerHTML += `<p>${item.title} -  ${item.duration} minutes</p>`
                 }
             }
             
@@ -75,7 +75,7 @@
             });
             document.querySelector('#add').addEventListener('click', () => {
                 axios.post('http://localhost:8000/api/movie', 
-                {title: 'test', length: 65, resume: 'test', released: new Date()})
+                {title: 'test', duration: 65, resume: 'test', released: new Date()})
                 .then(response => { list.push(response.data); display() });
             })
                 */

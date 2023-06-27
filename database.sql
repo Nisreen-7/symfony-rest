@@ -10,7 +10,7 @@ CREATE TABLE
         title VARCHAR(255) NOT NULL,
         resume TEXT,
         released DATE,
-        length INT
+        duration INT
     );
 
 CREATE TABLE
@@ -29,7 +29,12 @@ CREATE TABLE
     );
 
 INSERT INTO
-    movie (title, resume, released, length)
+    movie (
+        title,
+        resume,
+        released,
+        duration
+    )
 VALUES (
         'The godfather',
         'a mafia movie',
@@ -59,6 +64,7 @@ INSERT INTO
     genre_movie(id_movie, id_genre)
 VALUES (1, 1), (2, 1), (3, 2), (3, 5), (4, 5), (4, 3);
 
-select title, genre.label from movie
-left join genre_movie on movie.id=genre_movie.id_movie
-left join genre on genre.id=genre_movie.id_genre;
+select title, genre.label
+from movie
+    left join genre_movie on movie.id = genre_movie.id_movie
+    left join genre on genre.id = genre_movie.id_genre;
