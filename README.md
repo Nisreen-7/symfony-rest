@@ -36,3 +36,29 @@ Donner cette instance au persist du repo et faire un return de json() avec l'ins
 
  ### Dans le GenreController,
   rajouter une route sur localhost:8000/api/genre/movie/{id} qui utilisera le findByMovie du GenreRepository pour renvoyer les genres associés à un film donné
+
+
+  # faire le test dans un symfony
+
+  ## Des tests. En vous "inspirant" de la méthode testGetAll faire les tests suivants :
+
+Vérifier que le /api/movie/id fonctionne et renvoie bien un truc qui ressemble à un film
+	
+Vérifier que le /api/movie/id renvoie bien un 404 quand on lui donne un id qui n'existe pas
+	
+Vérifier que le /api/movie en POST fonctionne quand on lui envoie un film en JSON (on pourra par exemple vérifier que la réponse contient bien un id)
+	
+Vérifier que le /api/movie/id en PATCH fonctionne et met bien à jour le champ qu'on lui dit de modifier
+	
+Vérifier qu'on a un 404 sur le PATCH aussi si on donne un truc qui existe pas
+	
+Tester que le /api/movie/id en DELETE fonctionne, mais du coup ça marchera qu'une seule fois pour le moment
+
+
+# En vous inspirant de la partie validation du post du MovieController, faire :
+	
+La validation du Patch de MovieController (juste avant le update)
+	
+La validation du POST de GenreController, on veut juste que le label ne soit pas vide
+	
+La validation du PATCH du GenreController

@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/api/genre')]
 
@@ -52,32 +53,53 @@ class GenreController extends AbstractController
 
 
     #[Route(methods: 'POST')]
-    public function add(Request $request, SerializerInterface $serializer)
+    public function add(Request $request, SerializerInterface $serializer, ValidatorInterface $validator)
     {
         // $data = $request->toArray();
         // $movie = new Movie($data['title'], $data['resume'], new \DateTime($data['released']), $data['duration']);
-        $genre = $serializer->deserialize($request->getContent(), Movie::class, 'json');
-        $this->genrep->persist($genre);
-        return $this->json($genre, 201);
+        try {
 
+            $genre = $serializer->deserialize($request->getContent(), Genre::class, 'json');
+        } catch (\Exception $error) {
+            return $this->json('Invalid body', 400);
+        }
+
+        $errors = $validator->validate($genre);
+        if ($errors->count() > 0) {
+            return $this->json(['errors' => $errors], 400);
+        }
+        $this->genrep->persist($genre);
+
+        return $this->json($genre, 201);
     }
+
+
 
     #[Route('/{id}', methods: 'PATCH')]
-    public function update(int $id, Request $request, SerializerInterface $serializer)
+    public function update(int $id, Request $request, SerializerInterface $serializer,ValidatorInterface $validator)
     {
-        // $data = $request->toArray();
-        // $movie = new Movie($data['title'], $data['resume'], new \DateTime($data['released']), $data['duration']);
+
         $genre = $this->genrep->findById($id);
         if ($genre == null) {
-            return $this->json('Resource Not Found', 404);
+            return $this->json('Resource Not found', 404);
         }
-        $serializer->deserialize($request->getContent(), Genre::class, 'json', [
-            'object_to_populate' => $genre
-        ]);
+        try {
+            $serializer->deserialize($request->getContent(), Genre::class, 'json', [
+                'object_to_populate' => $genre
+            ]);
+        } catch (\Exception $error) {
+            return $this->json('Invalid body', 400);
+        }
+        $errors = $validator->validate($genre);
+        if ($errors->count() > 0) {
+            return $this->json(['errors' => $errors], 400);
+        }
         $this->genrep->update($genre);
-        return $this->json($genre, 201);
 
+        return $this->json($genre);
     }
+
+
 
 
     // Dans le GenreController, rajouter une route sur localhost:8000/api/genre/movie/{id} qui utilisera le findByMovie du GenreRepository

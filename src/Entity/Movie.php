@@ -3,15 +3,18 @@
 namespace App\Entity;
 
 use DateTime;
-
+use Symfony\Component\Validator\Constraints as Assert;
 
 
 class Movie
 {
-
+	#[Assert\NotBlank]
 	private string $title;
+
 	private string $resume;
 	private DateTime $released;
+
+	#[Assert\Positive]
 	private int $duration;
 	private array $Genre = [];
 	private ?int $id;
@@ -122,20 +125,23 @@ class Movie
 	/**
 	 * @return array
 	 */
-	public function getGenre(): array {
+	public function getGenre(): array
+	{
 		return $this->Genre;
 	}
-	
+
 	/**
 	 * @param array $Genre 
 	 * @return self
 	 */
-	public function setGenre(array $Genre): self {
+	public function setGenre(array $Genre): self
+	{
 		$this->Genre = $Genre;
 		return $this;
 	}
-	
-	public function addGenre(Genre $genre): self {
+
+	public function addGenre(Genre $genre): self
+	{
 		$this->Genre[] = $genre;
 		return $this;
 	}

@@ -10,6 +10,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 #[Route('/api/movie')]
 class MovieController extends AbstractController
@@ -39,6 +41,8 @@ class MovieController extends AbstractController
         }
         return $this->json($movie);
     }
+
+
     #[Route('/{id}', methods: 'DELETE')]
     public function delete(int $id): JsonResponse
     {
@@ -54,30 +58,54 @@ class MovieController extends AbstractController
 
 
     #[Route(methods: 'POST')]
-    public function add(Request $request, SerializerInterface $serializer)
+    public function add(Request $request, SerializerInterface $serializer, ValidatorInterface $validator)
     {
         // $data = $request->toArray();
         // $movie = new Movie($data['title'], $data['resume'], new \DateTime($data['released']), $data['duration']);
-        $movie = $serializer->deserialize($request->getContent(), Movie::class, 'json');
-        $this->movrep->persist($movie);
-        return $this->json($movie, 201);
+        try {
 
+            $movie = $serializer->deserialize($request->getContent(), Movie::class, 'json');
+        } catch (\Exception $error) {
+            return $this->json('Invalid body', 400);
+        }
+        $errors = $validator->validate($movie);
+        if ($errors->count() > 0) {
+            return $this->json(['errors' => $errors], 400);
+        }
+        $this->movrep->persist($movie);
+
+        return $this->json($movie, 201);
     }
 
+
+
     #[Route('/{id}', methods: 'PATCH')]
-    public function update(int $id, Request $request, SerializerInterface $serializer)
+    public function update(int $id, Request $request, SerializerInterface $serializer, ValidatorInterface $validator)
     {
-        // $data = $request->toArray();
-        // $movie = new Movie($data['title'], $data['resume'], new \DateTime($data['released']), $data['duration']);
         $movie = $this->movrep->findById($id);
         if ($movie == null) {
             return $this->json('Resource Not Found', 404);
         }
-        $serializer->deserialize($request->getContent(), Movie::class, 'json', [
-            'object_to_populate' => $movie
-        ]);
+
+
+        try {
+            $serializer->deserialize($request->getContent(), Movie::class, 'json', [
+                'object_to_populate' => $movie
+            ]);
+
+        } catch (\Exception $error) {
+
+            return $this->json('Invalid body', 400);
+        }
+        $errors = $validator->validate($movie);
+
+        if ($errors->count() > 0) {
+            return $this->json(['errors' => $errors], 400);
+        }
+
         $this->movrep->update($movie);
         return $this->json($movie, 201);
+
 
     }
 }
