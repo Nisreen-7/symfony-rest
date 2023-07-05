@@ -1,0 +1,51 @@
+{
+    "_id": "bd89a660-bbe9-478e-9825-3b8df72392af",
+    "colName": "FinfByMovie",
+    "created": "2023-06-27T12:07:19.493Z",
+    "sortNum": 10000,
+    "folders": [],
+    "requests": [
+        {
+            "_id": "144d269c-8a21-45fb-911d-5cea563ccd98",
+            "colId": "bd89a660-bbe9-478e-9825-3b8df72392af",
+            "containerId": "",
+            "name": "alternative",
+            "url": "localhost:8000/api/genre",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-06-27T12:07:43.754Z",
+            "modified": "2023-06-27T12:35:10.016Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "8cd483e1-b559-43d2-8f62-7b0141c1ed0c",
+            "colId": "bd89a660-bbe9-478e-9825-3b8df72392af",
+            "containerId": "",
+            "name": "findgenremovie",
+            "url": "localhost:8000/api/genre/movie/3",
+            "method": "GET",
+            "sortNum": 20000,
+            "created": "2023-06-27T12:25:30.797Z",
+            "modified": "2023-06-27T12:25:58.665Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        },
+        {
+            "_id": "41eef112-60db-41c6-bee1-2f468ff57f3b",
+            "colId": "bd89a660-bbe9-478e-9825-3b8df72392af",
+            "containerId": "",
+            "name": "alternative2",
+            "url": "localhost:8000/api/movie",
+            "method": "GET",
+            "sortNum": 30000,
+            "created": "2023-06-27T12:36:31.494Z",
+            "modified": "2023-06-27T12:36:39.604Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ]
+}

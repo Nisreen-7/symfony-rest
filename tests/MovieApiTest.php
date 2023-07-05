@@ -137,4 +137,50 @@ class MovieApiTest extends WebTestCase
     }
 
 
+
+
+
+    public function testSearchSuccess(): void
+    {
+        $client = static::createClient();
+        $client->request('GET', '/api/movie/search/t');
+        $json = json_decode($client->getResponse()->getContent(), true);
+        $this->assertResponseIsSuccessful();
+        $this->assertNotEmpty($json);
+        $this->assertIsString($json[0]['title']);
+        $this->assertIsString($json[0]['resume']);
+        $this->assertIsInt($json[0]['duration']);
+
+
+    }
+
+    public function testSearchWithResults(): void
+    {
+        $client = static::createClient();
+        $client->request('GET', '/api/movie/search/father');
+        $json = json_decode($client->getResponse()->getContent(), true);
+
+        $this->assertResponseIsSuccessful();
+
+        $this->assertCount(2, $json);
+        $this->assertStringContainsString('father', $json[0]['title']);
+        $this->assertIsInt($json[0]['id']);
+       
+    }
+
+    // Vérifier que le /api/movie/id renvoie bien un 404 quand on lui donne un id qui n'existe pas
+    public function testSearchNotFound(): void
+    {
+        $client = static::createClient();
+        $client->request('GET', '/api/movie/search/z');
+        $json = json_decode($client->getResponse()->getContent(), true);
+        // $this->assertResponseStatusCodeSame(404);
+
+        $this->assertResponseIsSuccessful();
+        $this->assertEmpty($json);
+
+    }
+
+
+
 }

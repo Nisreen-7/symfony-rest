@@ -108,4 +108,16 @@ class MovieController extends AbstractController
 
 
     }
+
+
+
+    #[Route('/search/{term}', methods: 'GET')]
+    public function search(string $term): JsonResponse
+    {
+        $movie = $this->movrep->search($term);
+        // if ($movie == null) {
+        //     return $this->json('Resource Not Found', 404);
+        // }
+        return $this->json($movie);
+    }
 }

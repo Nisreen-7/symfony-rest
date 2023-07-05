@@ -144,4 +144,22 @@ class MovieRepository
         $query->execute();
 
     }
+
+    /**
+     * @return Movie[]
+     */
+    public function search(string $term): array
+    {
+        $list = [];
+        $connection = Database::getConnection();
+        $query = $connection->prepare("select * From movie where CONCAT(title,resume,released) LIKE :term");
+        $query->bindValue(':term', '%' . $term . '%');
+
+        $query->execute();
+        foreach ($query->fetchAll() as $line) {
+            $list[] = new Movie($line['title'], $line['resume'],new DateTime($line['released']) , $line['duration'], $line['id']);
+        }
+        return $list;
+    }
+
 }

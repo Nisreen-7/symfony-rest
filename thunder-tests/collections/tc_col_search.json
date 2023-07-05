@@ -1,0 +1,23 @@
+{
+    "_id": "396cf62a-3218-4dd0-b4c7-b1389c7eb5d0",
+    "colName": "search",
+    "created": "2023-07-05T11:44:35.282Z",
+    "sortNum": 20000,
+    "folders": [],
+    "requests": [
+        {
+            "_id": "81d4d4c6-966b-44fc-977c-60237fa92c0d",
+            "colId": "396cf62a-3218-4dd0-b4c7-b1389c7eb5d0",
+            "containerId": "",
+            "name": "searchterm",
+            "url": "localhost:8000/api/movie/search/z",
+            "method": "GET",
+            "sortNum": 10000,
+            "created": "2023-07-05T11:45:11.787Z",
+            "modified": "2023-07-05T11:45:44.708Z",
+            "headers": [],
+            "params": [],
+            "tests": []
+        }
+    ]
+}
